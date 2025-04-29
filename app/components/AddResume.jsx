@@ -65,122 +65,67 @@ const AddResume = ({ offices }) => {
     cv_video: null,
   });
   console.log(formState);
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault(); // Prevent default form behavior
-
-  //   try {
-  //     console.log("beforeSubmit");
-
-  //     // Initialize a new FormData object
-  //     const formDataToSubmit = new FormData();
-
-  //     // Append scalar form fields from formState
-  //     formDataToSubmit.append("office", JSON.stringify(formState.office));
-  //     formDataToSubmit.append("name", formState.name);
-  //     formDataToSubmit.append("passport_no", formState.passport_no);
-  //     formDataToSubmit.append("dob", formState.dob);
-  //     formDataToSubmit.append("position", formState.position);
-  //     formDataToSubmit.append("salary", formState.salary);
-  //     formDataToSubmit.append("contract", formState.contract);
-  //     formDataToSubmit.append("religion", formState.religion);
-  //     formDataToSubmit.append("social_status", formState.social_status);
-  //     formDataToSubmit.append("place_of_birth", formState.place_of_birth);
-  //     formDataToSubmit.append("address", formState.address);
-  //     formDataToSubmit.append("education", formState.education);
-  //     formDataToSubmit.append("phone_number", formState.phone_number);
-  //     formDataToSubmit.append(
-  //       "passport_issue_place",
-  //       formState.passport_issue_place
-  //     );
-  //     formDataToSubmit.append(
-  //       "passport_issue_date",
-  //       formState.passport_issue_date
-  //     );
-  //     formDataToSubmit.append(
-  //       "passport_expire_date",
-  //       formState.passport_expire_date
-  //     );
-
-  //     formDataToSubmit.append("height", formState.height);
-  //     formDataToSubmit.append("weight", formState.weight);
-  //     formDataToSubmit.append("no_of_kids", formState.no_of_kids);
-  //     formDataToSubmit.append("nationality", formState.nationality);
-  //     formDataToSubmit.append("experience", formState.experience);
-  //     formDataToSubmit.append("refference", formState.refference);
-
-  //     // Append file fields to FormData
-  //     if (formState.picture) {
-  //       formDataToSubmit.append("picture", formState.picture); // 'picture' is the key expected by the server
-  //     }
-  //     if (formState.cv_video) {
-  //       formDataToSubmit.append("cv_video", formState.cv_video);
-  //     }
-  //     if (formState.passport_image) {
-  //       formDataToSubmit.append("passport_image", formState.passport_image); // 'passport_image' is the key expected by the server
-  //     }
-  //     formState.visas.forEach((file, index) => {
-  //       formDataToSubmit.append(`visas[${index}]`, file);
-  //     });
-  //     // Submit the FormData using your server action
-  //     const result = await createFormAction(formDataToSubmit);
-  //     console.log("Form successfully created:", result);
-
-  //     // Reset form state after successful submission
-  //     setFormState({
-  //       office: [],
-  //       name: "",
-  //       passport_no: "",
-  //       dob: "",
-  //       position: "",
-  //       salary: "",
-  //       contract: "",
-  //       religion: "",
-  //       social_status: "",
-  //       picture: null,
-  //       passport_image: null,
-  //       place_of_birth: "",
-  //       address: "",
-  //       education: "",
-  //       phone_number: "",
-  //       passport_issue_place: "",
-  //       passport_issue_date: "",
-  //       passport_expire_date: "",
-  //       height: "",
-  //       weight: "",
-  //       no_of_kids: "",
-  //       nationality: "",
-  //       experience: "",
-  //       refference: "",
-  //       visas: [],
-  //     });
-  //     await refreshAdminDashboard();
-  //     toast({
-  //       title: "Success",
-  //       description: "Form submitted successfully!",
-  //     });
-  //   } catch (error) {
-  //     console.error("Form creation failed:", error);
-
-  //     toast({
-  //       title: "Error",
-  //       description: "Failed to submit the form.",
-  //     });
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setLoading(true); // Start loading
+    e.preventDefault(); // Prevent default form behavior
+    setLoading(true);
     try {
       console.log("beforeSubmit");
 
+      // Initialize a new FormData object
       const formDataToSubmit = new FormData();
-      // ... your formData appending code ...
 
+      // Append scalar form fields from formState
+      formDataToSubmit.append("office", JSON.stringify(formState.office));
+      formDataToSubmit.append("name", formState.name);
+      formDataToSubmit.append("passport_no", formState.passport_no);
+      formDataToSubmit.append("dob", formState.dob);
+      formDataToSubmit.append("position", formState.position);
+      formDataToSubmit.append("salary", formState.salary);
+      formDataToSubmit.append("contract", formState.contract);
+      formDataToSubmit.append("religion", formState.religion);
+      formDataToSubmit.append("social_status", formState.social_status);
+      formDataToSubmit.append("place_of_birth", formState.place_of_birth);
+      formDataToSubmit.append("address", formState.address);
+      formDataToSubmit.append("education", formState.education);
+      formDataToSubmit.append("phone_number", formState.phone_number);
+      formDataToSubmit.append(
+        "passport_issue_place",
+        formState.passport_issue_place
+      );
+      formDataToSubmit.append(
+        "passport_issue_date",
+        formState.passport_issue_date
+      );
+      formDataToSubmit.append(
+        "passport_expire_date",
+        formState.passport_expire_date
+      );
+
+      formDataToSubmit.append("height", formState.height);
+      formDataToSubmit.append("weight", formState.weight);
+      formDataToSubmit.append("no_of_kids", formState.no_of_kids);
+      formDataToSubmit.append("nationality", formState.nationality);
+      formDataToSubmit.append("experience", formState.experience);
+      formDataToSubmit.append("refference", formState.refference);
+
+      // Append file fields to FormData
+      if (formState.picture) {
+        formDataToSubmit.append("picture", formState.picture); // 'picture' is the key expected by the server
+      }
+      if (formState.cv_video) {
+        formDataToSubmit.append("cv_video", formState.cv_video);
+      }
+      if (formState.passport_image) {
+        formDataToSubmit.append("passport_image", formState.passport_image); // 'passport_image' is the key expected by the server
+      }
+      formState.visas.forEach((file, index) => {
+        formDataToSubmit.append(`visas[${index}]`, file);
+      });
+      // Submit the FormData using your server action
       const result = await createFormAction(formDataToSubmit);
       console.log("Form successfully created:", result);
 
+      // Reset form state after successful submission
       setFormState({
         office: [],
         name: "",
@@ -208,7 +153,6 @@ const AddResume = ({ offices }) => {
         refference: "",
         visas: [],
       });
-
       await refreshAdminDashboard();
       toast({
         title: "Success",
@@ -216,14 +160,17 @@ const AddResume = ({ offices }) => {
       });
     } catch (error) {
       console.error("Form creation failed:", error);
+
       toast({
         title: "Error",
         description: "Failed to submit the form.",
       });
-    } finally {
-      setLoading(false); // End loading, success or fail
+    }finally{
+      setLoading(false)
     }
   };
+
+ 
   const handleChange = (e) => {
     const { name, value, files } = e.target || {};
     if (!name) return; // Early exit if name is undefined
