@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { autoUpdateOnholdStatus, deleteResume, refreshAdminDashboard } from '@/lib/actions';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
-const Admin_Table = ({passenger}) => {
+const Admin_Table = ({passenger , offices}) => {
     const router = useRouter()
     const [search, setSearch]= useState('');
     const [users, setUsers] = useState([]);
@@ -93,14 +93,24 @@ const Admin_Table = ({passenger}) => {
       },
       {
           name: <p className="font-bold text-[16px]">Name Of Bio</p>,
-          selector: row => (
+          selector: row => {
+            const getAge = dob => {
+              const birthDate = new Date(dob);
+              const today = new Date();
+              let age = today.getFullYear() - birthDate.getFullYear();
+              const m = today.getMonth() - birthDate.getMonth();
+              if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                  age--;
+              }
+              return age;
+          };return(
               <div className="flex flex-col space-y-1 p-2">
                   <h3 className="font-bold text-md uppercase">{row.name}</h3>
                   <p className="font-semibold">Passport: {row.passport_no}</p>
-                  <p>{row.dob}</p>
+                  <p>{row.dob} ({getAge(row.dob)} years)</p>
                   <p>{row.nationality}</p>
-              </div>
-          ),
+              </div>)
+          },
           style: { minWidth: "150px", padding:"0px 3px" },
       },
       {
@@ -205,15 +215,22 @@ const Admin_Table = ({passenger}) => {
       {
         name: <p className="font-bold text-[16px]">Office</p>,
         selector: row => (
-            <div className="">
-                {Array.isArray(row?.office)
-                    ? row.office.map((off, index) => <li className="list-none flex text-sm" key={index}>{index+1}. {off}</li>)
-                    : row?.office || "No office data"}
-            </div>
+          <div>
+            {Array.isArray(row?.office)
+              ? row.office.map((officeId, index) => {
+                  const office = offices.find(o => o._id === officeId);
+                  return (
+                    <li className="list-none flex text-sm" key={index}>
+                      {index + 1}. {office ? office.office_name : 'Unknown'}
+                    </li>
+                  );
+                })
+              : "No office data"}
+          </div>
         ),
         style: { minWidth: "150px" },
         wrap: true,
-    },
+      }
       
   ];
    

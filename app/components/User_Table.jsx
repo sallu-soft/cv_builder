@@ -57,13 +57,23 @@ const User_Table = ({ resume }) => {
   const columns = [
     {
       name: <p className="font-bold text-lg">Name</p>,
-      selector: (row) => (
+      selector: (row) => {
+        const getAge = dob => {
+          const birthDate = new Date(dob);
+          const today = new Date();
+          let age = today.getFullYear() - birthDate.getFullYear();
+          const m = today.getMonth() - birthDate.getMonth();
+          if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+              age--;
+          }
+          return age;
+      }; return(
         <div className="flex flex-col space-y-2">
           <h3 className="font-semibold text-green-600 text-md uppercase">{row.name}</h3>
           <p className="font-semibold">{row.passport_no}</p>
-          <p>{row.dob}</p>
-        </div>
-      ),
+          <p>{row.dob} ({getAge(row.dob)} years)</p>
+        </div>)
+      },
       wrap: true,
       style: { minWidth: "150px", padding:"0px 8px" },
     },
@@ -233,7 +243,7 @@ const User_Table = ({ resume }) => {
   const singleUsersData = resume.filter((pax) => {
     return (
       Array.isArray(pax.office) &&
-      pax.office.includes(user?.office_name)
+      pax.office.includes(user?.id)
       //  &&
       // !(pax.status === "Approved" && pax.approved_office && pax.approved_office !== user?.office_name) 
     );

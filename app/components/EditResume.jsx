@@ -198,9 +198,9 @@ const EditResume = ({resume, office,id}) => {
     }
   };
   // Convert offices data to the format needed by React-Select
-  const options = office.map(office => ({
-    value: office.office_name,  // Use office ID as value
-    label: office.office_name, // Use office name as label
+  const options = office.map((office) => ({
+    value: office?._id, // Use office ID as value
+    label: office?.office_name, // Use office name as label
   }));
 
   return (
@@ -217,22 +217,20 @@ const EditResume = ({resume, office,id}) => {
             Select Office
           </label>
           <div className="mt-2">
-            <Select
-              name="office"
-              options={options}
-              value={formState.office.map((office) =>
-                options.find((option) => option.value === office)
-              )} // Map selected values to options
-              onChange={(selectedOptions) =>
-                setFormState((prevState) => ({
-                  ...prevState,
-                  office: selectedOptions.map((option) => option.value), // Update array with selected values
-                }))
-              }
-              isMulti // Enable multi-select
-              isSearchable={true}
-              className="w-full text-gray-900"
-            />
+          <Select
+            name="office"
+            options={options}
+            value={options.filter((option) => formState.office.includes(option.value))} // Show selected values
+            onChange={(selectedOptions) =>
+              setFormState((prevState) => ({
+                ...prevState,
+                office: selectedOptions.map((option) => option.value), // Store only IDs
+              }))
+            }
+            isMulti
+            isSearchable
+            className="w-full text-gray-900"
+          />
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">

@@ -1,15 +1,15 @@
 
-import { fetchAllResumes, refreshAdminDashboard } from "@/lib/actions";
+import { fetchAllOffices, fetchAllResumes, refreshAdminDashboard } from "@/lib/actions";
 import Admin_Table from "../components/Admin_Table";
 
 const AdminDashboard = async () => {
 
   
   const resume = await fetchAllResumes();
-  
+  const offices = await fetchAllOffices();
   return (
     <div className="m-4 shadow-lg mx-auto w-full">
-      <Admin_Table passenger={resume?.slice().reverse()}/>
+      <Admin_Table passenger={resume?.slice().reverse()} offices={offices}/>
       {/* {resume[0].name} */}
     </div>
   );
