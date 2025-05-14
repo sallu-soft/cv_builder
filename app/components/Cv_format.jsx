@@ -12,10 +12,43 @@ const Cv_format = ({ resume }) => {
   console.log(user);
   const targetRef = useRef(null);
 
+  // const captureAsJPG = async () => {
+  //   if (targetRef.current) {
+  //     const canvas = await html2canvas(targetRef.current, { scale: 2 });
+  //     const image = canvas.toDataURL("image/jpeg", 1.0);
+
+  //     const link = document.createElement("a");
+  //     link.href = image;
+  //     link.download = `${resume?.name}-cv.jpg`;
+  //     link.click();
+  //   }
+  // };
+  // const downloadPDF = async () => {
+  //   if (!targetRef.current) return;
+
+  //   const canvas = await html2canvas(targetRef.current, { scale: 2 });
+  //   const imgData = canvas.toDataURL("image/jpeg");
+
+  //   const pdf = new jsPDF("p", "mm", "a4");
+  //   const pdfWidth = pdf.internal.pageSize.getWidth();
+  //   const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+   
+
+  //   pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+  //   pdf.save(`${resume?.name}-cv.pdf`);
+  // };
+
   const captureAsJPG = async () => {
     if (targetRef.current) {
+      const originalWidth = targetRef.current.offsetWidth;
+      const scale = window.innerWidth < originalWidth ? window.innerWidth / originalWidth : 1;
+      targetRef.current.style.transform = `scale(${scale})`;
+      targetRef.current.style.transformOrigin = 'top left';
+
       const canvas = await html2canvas(targetRef.current, { scale: 2 });
       const image = canvas.toDataURL("image/jpeg", 1.0);
+
+      targetRef.current.style.transform = ''; // Reset transform
 
       const link = document.createElement("a");
       link.href = image;
@@ -23,17 +56,25 @@ const Cv_format = ({ resume }) => {
       link.click();
     }
   };
+
   const downloadPDF = async () => {
     if (!targetRef.current) return;
 
+    const originalWidth = targetRef.current.offsetWidth;
+    const scale = window.innerWidth < originalWidth ? window.innerWidth / originalWidth : 1;
+    targetRef.current.style.transform = `scale(${scale})`;
+    targetRef.current.style.transformOrigin = 'top left';
+
     const canvas = await html2canvas(targetRef.current, { scale: 2 });
-    const imgData = canvas.toDataURL("image/png");
+    const imgData = canvas.toDataURL("image/jpeg");
+
+    targetRef.current.style.transform = ''; // Reset transform
 
     const pdf = new jsPDF("p", "mm", "a4");
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
     pdf.save(`${resume?.name}-cv.pdf`);
   };
   useEffect(() => {
@@ -78,15 +119,15 @@ const Cv_format = ({ resume }) => {
 
   return (
     <>
-      <div ref={targetRef} className="w-[1000px] p-2 mx-auto">
+      <div ref={targetRef} className="w-[1000px] mx-auto p-3 ">
         <div>
           {user ? (
-            <Image
+            <img
               src={user?.office_logo}
               alt={resume?.name}
-              width={300}
+              width={1000}
               height={200}
-              className="rounded w-full h-[120px]  object-contain"
+              className="rounded max-w-[1000px] h-[120px]"
             />
           ) : (
             "...loading"
@@ -106,7 +147,7 @@ const Cv_format = ({ resume }) => {
 
         <div className="gap-x-3 mt-2 flex w-full">
           <div className="w-full ">
-            <div className="w-[110%]">
+            <div className="w-[115%]">
               <div className="border border-black font-semibold border-collapse">
                 <div className="grid grid-cols-3 border-b border-black ">
                   <div className="border-r border-black px-1 text-[13px] pb-3 bg-gray-200">
@@ -484,12 +525,12 @@ const Cv_format = ({ resume }) => {
           <div className="flex items-end flex-col">
             <div className="flex max-w-[190px] justify-end">
               {resume?.picture ? (
-                <Image
+                <img
                   src={resume?.picture}
                   alt={resume?.name}
                   width={350}
                   height={340}
-                  className="rounded max-h-[290px] object-contain"
+                  className="rounded max-w-[350px] max-h-[290px] object-contain"
                 />
               ) : (
                 "No Image"
@@ -499,12 +540,12 @@ const Cv_format = ({ resume }) => {
               <div className="gap-y-3 max-w-[380px] flex flex-col ">
                 {resume?.picture && resume?.passport_image ? (
                   <>
-                    <Image
+                    <img
                       src={resume?.passport_image}
                       alt={resume?.name}
                       width={350}
                       height={850}
-                      className="rounded max-h-[450px] object-contain"
+                      className="rounded max-w-[350px] max-h-[450px] object-contain"
                     />
                   </>
                 ) : (
@@ -514,15 +555,15 @@ const Cv_format = ({ resume }) => {
               <div className="grid mt-2 max-w-[350px] grid-cols-2 gap-2">
                 {resume?.visas?.map((visa, key) => {
                   const imageHeight = resume.visas.length === 1 ? 330 : 280; // Set height dynamically
-
+                  const imageWidth = resume.visas.length === 1 ? 147 : 298;
                   return (
-                    <Image
+                    <img
                       src={visa}
                       key={key}
                       alt={resume?.name}
                       width={300}
                       height={imageHeight}
-                      className={`h-[${imageHeight}px]`}
+                      className={`h-[${imageHeight}px] max-w-[${imageWidth}px]`}
                     />
                   );
                 })}
@@ -564,6 +605,7 @@ const Cv_format = ({ resume }) => {
           </div>
         )}
       </div>
+      
     </>
   );
 };
