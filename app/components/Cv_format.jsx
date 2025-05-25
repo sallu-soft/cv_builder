@@ -147,7 +147,7 @@ const Cv_format = ({ resume }) => {
 
         <div className="gap-x-3 mt-2 flex w-full">
           <div className="w-full ">
-            <div className="w-[115%]">
+            <div className="w-[118%]">
               <div className="border border-black font-semibold border-collapse">
                 <div className="grid grid-cols-3 border-b border-black ">
                   <div className="border-r border-black px-1 text-[13px] pb-3 bg-gray-200">
@@ -530,7 +530,7 @@ const Cv_format = ({ resume }) => {
                   alt={resume?.name}
                   width={350}
                   height={340}
-                  className="rounded max-w-[350px] max-h-[290px] object-contain"
+                  className="rounded max-w-[370px] max-h-[300px] object-contain"
                 />
               ) : (
                 "No Image"
@@ -574,14 +574,14 @@ const Cv_format = ({ resume }) => {
           
         </div>
         
-        <div className="bg-gray-700 text-white w-full flex gap-5 items-center justify-center text-2xl pb-3 flex-wrap">
+        <div className="bg-gray-700 text-gray-100 w-full flex gap-5 items-center justify-center text-2xl pb-3 flex-wrap">
           {Array.isArray(user?.office_number)
             ? user?.office_number.map((number, index) => (
                 <span key={index}>{number}</span>
               ))
             : user?.office_number}
         </div>
-        <div className="bg-gray-700 text-white w-full flex gap-3 items-center justify-center text-2xl pb-4 flex-wrap">
+        <div className="bg-gray-700 text-gray-100 w-full flex gap-3 items-center justify-center text-2xl pb-4 flex-wrap">
           {user?.office_email}
         </div>
       </div>

@@ -122,7 +122,7 @@ const Admin_Table = ({passenger , offices}) => {
       },
       {
           name: <p className="font-bold text-[16px]">Salary</p>,
-          selector: row => `$${row.salary}`,
+          selector: row => `${row.salary}`,
           wrap: true,
       },
       {
