@@ -221,7 +221,7 @@ const Admin_Table = ({passenger , offices}) => {
                   const office = offices.find(o => o._id === officeId);
                   return (
                     <li className="list-none flex text-sm" key={index}>
-                      {index + 1}. {office ? office.office_name : 'Unknown'}
+                      {index + 1}. {office ? `${office?.office_name?.slice(0,10)}...` : 'Unknown'}
                     </li>
                   );
                 })
@@ -299,7 +299,7 @@ const Admin_Table = ({passenger , offices}) => {
     <DialogHeader>
       <DialogTitle>CV Video Preview</DialogTitle>
     </DialogHeader>
-    <video controls className="w-full rounded-md border">
+    <video controls className="w-full max-h-[600px] rounded-md border">
       <source src={videoUrl} type="video/mp4" />
       Your browser does not support the video tag.
     </video>

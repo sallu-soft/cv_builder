@@ -32,7 +32,6 @@ const Cv_format = ({ resume }) => {
   //   const pdf = new jsPDF("p", "mm", "a4");
   //   const pdfWidth = pdf.internal.pageSize.getWidth();
   //   const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-   
 
   //   pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
   //   pdf.save(`${resume?.name}-cv.pdf`);
@@ -41,14 +40,17 @@ const Cv_format = ({ resume }) => {
   const captureAsJPG = async () => {
     if (targetRef.current) {
       const originalWidth = targetRef.current.offsetWidth;
-      const scale = window.innerWidth < originalWidth ? window.innerWidth / originalWidth : 1;
+      const scale =
+        window.innerWidth < originalWidth
+          ? window.innerWidth / originalWidth
+          : 1;
       targetRef.current.style.transform = `scale(${scale})`;
-      targetRef.current.style.transformOrigin = 'top left';
+      targetRef.current.style.transformOrigin = "top left";
 
       const canvas = await html2canvas(targetRef.current, { scale: 2 });
       const image = canvas.toDataURL("image/jpeg", 1.0);
 
-      targetRef.current.style.transform = ''; // Reset transform
+      targetRef.current.style.transform = ""; // Reset transform
 
       const link = document.createElement("a");
       link.href = image;
@@ -61,14 +63,15 @@ const Cv_format = ({ resume }) => {
     if (!targetRef.current) return;
 
     const originalWidth = targetRef.current.offsetWidth;
-    const scale = window.innerWidth < originalWidth ? window.innerWidth / originalWidth : 1;
+    const scale =
+      window.innerWidth < originalWidth ? window.innerWidth / originalWidth : 1;
     targetRef.current.style.transform = `scale(${scale})`;
-    targetRef.current.style.transformOrigin = 'top left';
+    targetRef.current.style.transformOrigin = "top left";
 
     const canvas = await html2canvas(targetRef.current, { scale: 2 });
     const imgData = canvas.toDataURL("image/jpeg");
 
-    targetRef.current.style.transform = ''; // Reset transform
+    targetRef.current.style.transform = ""; // Reset transform
 
     const pdf = new jsPDF("p", "mm", "a4");
     const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -552,7 +555,16 @@ const Cv_format = ({ resume }) => {
                   "No Images"
                 )}
               </div>
-              <div className="grid mt-2 max-w-[350px] grid-cols-2 gap-2">
+              <div className="mt-2  max-w-[380px]">
+                {resume?.visas?.[0] && (
+                  <img
+                    src={resume.visas[0]}
+                    alt={resume?.name}
+                    className="w-full max-h-[400px] rounded-md object-contain"
+                  />
+                )}
+              </div>
+              {/* <div className="grid mt-2 max-w-[350px] grid-cols-2 gap-2">
                 {resume?.visas?.map((visa, key) => {
                   const imageHeight = resume.visas.length === 1 ? 330 : 280; // Set height dynamically
                   const imageWidth = resume.visas.length === 1 ? 147 : 298;
@@ -567,13 +579,11 @@ const Cv_format = ({ resume }) => {
                     />
                   );
                 })}
-              </div>
+              </div> */}
             </div>
-           
           </div>
-          
         </div>
-        
+
         <div className="bg-gray-700 text-gray-100 w-full flex gap-5 items-center justify-center text-2xl pb-3 flex-wrap">
           {Array.isArray(user?.office_number)
             ? user?.office_number.map((number, index) => (
@@ -605,7 +615,6 @@ const Cv_format = ({ resume }) => {
           </div>
         )}
       </div>
-      
     </>
   );
 };
