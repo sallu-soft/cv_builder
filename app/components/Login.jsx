@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("office_email", user.office_email);
+    formData.append("office_email", user.office_email.toLowerCase());
     formData.append("office_password", user.office_password);
     try {
       const response = await processLogin(formData);

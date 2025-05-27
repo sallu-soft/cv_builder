@@ -70,7 +70,7 @@ const AddOffice = () => {
       formData.append(`office_numbers[${index}]`, num);
     });
     formData.append("office_address", office_address);
-    formData.append("office_email", office_email);
+    formData.append("office_email", office_email.toLowerCase());
     formData.append("office_password", office_password);
     formData.append("role", role);
     if (office_logo) {

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 
 const EditUser = ({ office }) => {
+  
   const router = useRouter();
   const [updatedOffice, setUpdatedOffice] = useState({
     office_name: office.office_name || "",
@@ -15,11 +16,11 @@ const EditUser = ({ office }) => {
     office_logo: null,
     role: office.role || "user",
   });
-
+  
   const handleFileChange = (e) => {
     setUpdatedOffice({ ...updatedOffice, office_logo: e.target.files[0] });
   };
-
+  
   const handlePhoneNumberChange = (index, value) => {
     const updatedNumber = [...updatedOffice.office_number];
     updatedNumber[index] = value;
@@ -40,8 +41,9 @@ const EditUser = ({ office }) => {
 
     const formData = new FormData();
     formData.append("office_name", updatedOffice.office_name);
+    
     updatedOffice.office_number.forEach((num, index) => {
-      formData.append(`office_number[${index}]`, num);
+      formData.append(`office_numbers[${index}]`, num); // ✅ match backend
     });
     formData.append("office_address", updatedOffice.office_address);
     formData.append("office_email", updatedOffice.office_email);
