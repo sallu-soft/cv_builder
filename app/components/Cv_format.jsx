@@ -143,7 +143,7 @@ const Cv_format = ({ resume }) => {
               REF NO:
             </div>
             <div className="px-1 pb-2 !pt-0 text-center  border-r border-black">
-              2
+              {resume?.ref_no}
             </div>
           </div>
         </div>

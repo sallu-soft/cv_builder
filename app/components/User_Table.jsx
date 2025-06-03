@@ -116,11 +116,7 @@ const User_Table = ({ resume }) => {
       selector: (row) => `${row.salary}`,
       wrap: true,
     },
-    {
-      name: <p className="font-bold text-lg">Contract</p>,
-      selector: (row) => row.contract,
-      wrap: true,
-    },
+    
     {
       name: <p className="font-bold text-lg">Religion</p>,
       selector: (row) => row.religion,
@@ -169,11 +165,7 @@ const User_Table = ({ resume }) => {
       selector: (row) => row.experience,
       wrap: true,
     },
-    {
-      name: <p className="font-bold text-lg">Reference</p>,
-      selector: (row) => row.refference,
-      wrap: true,
-    },
+    
     {
       name: <p className="font-bold text-lg">Passport Expiry</p>,
       selector: (row) => row.passport_expire_date,

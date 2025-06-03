@@ -97,6 +97,11 @@ const resumeSchema = new Schema(
       type: String,
       trim: true,
     },
+    ref_no: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
     status: {
       type: String,
       enum: ['Pending', 'Approved','Onhold', 'Rejected'],
